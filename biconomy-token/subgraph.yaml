@@ -1,0 +1,30 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BicoTokenImplementation
+    network: mainnet
+    source:
+      address: "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2"
+      abi: BicoTokenImplementation
+      startBlock: 13354549
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - BeaconUpgraded
+        - Upgraded
+      abis:
+        - name: BicoTokenImplementation
+          file: ./abis/BicoTokenImplementation.json
+      eventHandlers:
+        - event: AdminChanged(address,address)
+          handler: handleAdminChanged
+        - event: BeaconUpgraded(indexed address)
+          handler: handleBeaconUpgraded
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: ./src/bico-token-implementation.ts
